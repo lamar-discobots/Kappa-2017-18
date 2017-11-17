@@ -60,7 +60,46 @@ void pre_auton()
 
 task autonomous()
 {
-  // this will make the robot to just move foward for 2 seconds
+
+motor [Lift2] = -127;
+	wait (2.8);
+motor [Lift2] = 0;
+// this will make the lift up
+motor [MobileR] = 127;
+motor [MobileL] = 127;
+	wait (1.0);
+motor [MobileR] = 0;
+motor [MobileL] = 0;
+// this will make the Mobile goal to go down, and robot is completely open (Transfomation over)
+motor [Left] = 127;
+motor [Right] = 127;
+  wait (3.2);
+motor [Left] = 0;
+motor [Right] = 0;
+//this will make so that the robot moves foward towards the mobile goal
+motor [MobileR] = -127;
+motor [MobileL] = -127;
+	wait (2.8);
+motor [MobileR] = 0;
+motor [MobileL] = 0;
+//this will make the mobile goal to go up with one moble cone
+motor [Left] = -127;
+motor [Right] = -127;
+	wait (4.0);
+motor [Left] = 0;
+motor [Right] = 0;
+//this will make the robot to move back towards the goal
+motor [Right] = 127;
+motor [Left] = -127;
+	wait (1.0);
+motor [Right] = 0;
+motor [Left] = 0;
+//this will make the robot to point turn 90 away from the wall
+
+
+
+
+
   // ..........................................................................
 
   // Remove this function call once you have "real" code.
@@ -79,7 +118,7 @@ task autonomous()
 
 task usercontrol()
 {
-// User control code here, inside the loop, drive train
+// User control code here, inside the loop( this is to map your bottons)
   while (true)
   {
   	int leftside=vexRT(Ch3);
@@ -92,7 +131,7 @@ task usercontrol()
 		int liftdown2=vexRT(Btn5D);
 		int mobileup=vexRT(Btn7L);
 		int mobiledown=vexRT(Btn7D);
-
+//Drive train
 		if (leftside >=10)
 			{motor [Left] =leftside;
 				}
@@ -134,7 +173,6 @@ task usercontrol()
 		else
 				motor [Lift2]= 0;
 // Claw control
-
 		 if (clawopen == 1)
 	  	 motor [Claw] = 127; //opening the claw
 
