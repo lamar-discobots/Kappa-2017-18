@@ -34,18 +34,18 @@
 
 void pre_auton()
 {
-  // Set bStopTasksBetweenModes to false if you want to keep user created tasks
-  // running between Autonomous and Driver controlled modes. You will need to
-  // manage all user created tasks if set to false.
-  bStopTasksBetweenModes = true;
+	// Set bStopTasksBetweenModes to false if you want to keep user created tasks
+	// running between Autonomous and Driver controlled modes. You will need to
+	// manage all user created tasks if set to false.
+	bStopTasksBetweenModes = true;
 
 	// Set bDisplayCompetitionStatusOnLcd to false if you don't want the LCD
 	// used by the competition include file, for example, you might want
 	// to display your team name on the LCD in this function.
 	// bDisplayCompetitionStatusOnLcd = false;
 
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
+	// All activities that occur before the competition starts
+	// Example: clearing encoders, setting servo positions, ...
 }
 
 /*---------------------------------------------------------------------------*/
@@ -61,49 +61,57 @@ void pre_auton()
 task autonomous()
 {
 
-motor [Lift2] = -127;
+	motor [Lift2] = -127;
 	wait (2.8);
-motor [Lift2] = 0;
-// this will make the lift up
-motor [MobileR] = 127;
-motor [MobileL] = 127;
-	wait (1.0);
-motor [MobileR] = 0;
-motor [MobileL] = 0;
-// this will make the Mobile goal to go down, and robot is completely open (Transfomation over)
-motor [Left] = 127;
-motor [Right] = 127;
-  wait (3.2);
-motor [Left] = 0;
-motor [Right] = 0;
-//this will make so that the robot moves foward towards the mobile goal
-motor [MobileR] = -127;
-motor [MobileL] = -127;
-	wait (2.8);
-motor [MobileR] = 0;
-motor [MobileL] = 0;
-//this will make the mobile goal to go up with one moble cone
-motor [Left] = -127;
-motor [Right] = -127;
+	motor [Lift2] = 0;
+	// this will make the lift up
+	motor [MobileR] = -127;
+	motor [MobileL] = -127;
+	wait (0.9);
+	motor [MobileR] = 0;
+	motor [MobileL] = 0;
+	// this will make the Mobile goal to go down, and robot is completely open (Transfomation over)
+	motor [Left] = 127;
+	motor [Right] = 127;
 	wait (4.0);
-motor [Left] = 0;
-motor [Right] = 0;
-//this will make the robot to move back towards the goal
-motor [Right] = 127;
-motor [Left] = -127;
+	motor [Left] = 0;
+	motor [Right] = 0;
+	//this will make so that the robot moves foward towards the mobile goal
+	motor [MobileR] = 127;
+	motor [MobileL] = 127;
 	wait (1.0);
-motor [Right] = 0;
-motor [Left] = 0;
-//this will make the robot to point turn 90 away from the wall
+	motor [MobileR] = 0;
+	motor [MobileL] = 0;
+	wait (0.5);
+	this will make the mobile goal to go up with one moble cone
+	motor [Left] = -127;
+	motor [Right] = -127;
+	wait (4.0);
+	motor [Left] = 0;
+	motor [Right] = 0;
+	this will make the robot to move back towards the goal
+	motor [Right] = 127;    // <- top + for blue, top - for red (keep opposite)
+	motor [Left] = -127;
+	wait (1.0);
+	motor [Right] = 0;
+	motor [Left] = 0;
+	this will make the robot to point turn 90 away from the wall
+	motor [MobileR] = -63.5;
+	motor [MobileL] = -63.5;
+	wait (1.0);
+	motor [MobileR] = 0;
+	motor [MobileL] = 0;
+	//
+	motor [Right] = -63.5;
+	motor [Left]  = -63.5;
+  wait (1.0);
+  motor [Right] = 0;
+  motor [Left]  = 0;
 
+	// ..........................................................................
 
-
-
-
-  // ..........................................................................
-
-  // Remove this function call once you have "real" code.
-  AutonomousCodePlaceholderForTesting();
+	// Remove this function call once you have "real" code.
+	AutonomousCodePlaceholderForTesting();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -118,10 +126,10 @@ motor [Left] = 0;
 
 task usercontrol()
 {
-// User control code here, inside the loop( this is to map your bottons)
-  while (true)
-  {
-  	int leftside=vexRT(Ch3);
+	// User control code here, inside the loop( this is to map your bottons)
+	while (true)
+	{
+		int leftside=vexRT(Ch3);
 		int rightside=vexRT(Ch2);
 		int liftup=vexRT(Btn6U);
 		int liftdown=vexRT(Btn6D);
@@ -131,79 +139,79 @@ task usercontrol()
 		int liftdown2=vexRT(Btn5D);
 		int mobileup=vexRT(Btn7L);
 		int mobiledown=vexRT(Btn7D);
-//Drive train
+		//Drive train
 		if (leftside >=10)
-			{motor [Left] =leftside;
-				}
+		{motor [Left] =leftside;
+		}
 		else if (leftside <=-10)
-			{motor [Left] =leftside;
-				}
+		{motor [Left] =leftside;
+		}
 		else
-			{motor [Left] =0;
-				}
+		{motor [Left] =0;
+		}
 
 		if (rightside >=10)
-			{
-				motor [Right] =rightside;
-			}
+		{
+			motor [Right] =rightside;
+		}
 		else if (rightside <=-10)
-			{
-				motor [Right] =rightside;
-				}
+		{
+			motor [Right] =rightside;
+		}
 		else
 
-			{motor [Right] =0;}
-// Lift
+		{motor [Right] =0;}
+		// Lift
 
 		if (liftup == 1) {
-				motor [Lift1] = 127;
-	}// this is for the lift to go up
+			motor [Lift1] = 127;
+		}// this is for the lift to go up
 		else if (liftdown == 1) {
-				motor [Lift1] = -127;
-	}//this is lift to go down
+			motor [Lift1] = -127;
+		}//this is lift to go down
 		else {
-				motor [Lift1] = 0;
-			}// this is so the lift doesn't move if there's nothing
+			motor [Lift1] = 0;
+		}// this is so the lift doesn't move if there's nothing
 		if (liftup2 == 1){
-				motor [Lift2] = 127;
-			}
+			motor [Lift2] = 127;
+		}
 		else if (liftdown2 == 1){
-				motor [Lift2] = -127;
-			}
+			motor [Lift2] = -127;
+		}
 		else
-				motor [Lift2]= 0;
-// Claw control
-		 if (clawopen == 1)
-	  	 motor [Claw] = 127; //opening the claw
+			motor [Lift2]= 0;
+		// Claw control
+		if (clawopen == 1)
+			motor [Claw] = 127; //opening the claw
 
-	 	 else if (clawclose == 1)
-	 	   motor [Claw] = -127; // closing in the claw
-     else{
-    	motor [Claw] = 0;
-   }// no claw movement
+		else if (clawclose == 1)
+			motor [Claw] = -127; // closing in the claw
+		else{
+			motor [Claw] = 0;
+		}// no claw movement
 
-   	if(mobileup == 1){
-   		motor [MobileR] = 127;
-   		motor [MobileL] = 127;
-   	}
-  	else if (mobiledown == 1){
-   		motor [MobileR] = -127;
-   		motor [MobileL] = -127;
-   	}
-   	else{
-   		motor [MobileR] = 0;
-   		motor [MobileL] = 0;
-  }
+		if(mobileup == 1){
+			motor [MobileR] = 127;
+			motor [MobileL] = 127;
+		}
+		else if (mobiledown == 1){
+			motor [MobileR] = -127;
+			motor [MobileL] = -127;
+		}
+		else{
+			motor [MobileR] = 0;
+			motor [MobileL] = 0;
+		}
 
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
+		// This is the main execution loop for the user control program.
+		// Each time through the loop your program should update motor + servo
+		// values based on feedback from the joysticks.
 
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
+		// ........................................................................
+		// Insert user code here. This is where you use the joystick values to
+		// update your motors, etc.
+		// ........................................................................
 
-    // Remove this function call once you have "real" code.
-  }
+		// Remove this function call once you have "real" code.
+	}
 }
