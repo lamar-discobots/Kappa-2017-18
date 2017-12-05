@@ -138,9 +138,9 @@ task usercontrol()
 		int mobileup=vexRT(Btn7L);
 		int mobiledown=vexRT(Btn7D);
 		int leftY=vexRT(Ch3);
-		int leftX=vexRT(Ch2);
+		int leftX=vexRT(Ch4);
 		int deadzone = 10; //toleranec for joystick sticking and not returng to zero when released
-		int Lift2M=vexRT(Ch3);
+		int Lift2M=vexRT(Ch2);
 
   if (abs(vexRT[Ch3]) > deadzone)
 	{
