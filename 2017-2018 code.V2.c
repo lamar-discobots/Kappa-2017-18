@@ -62,49 +62,49 @@ task autonomous()
 {
 
 	motor [Lift2] = -127;
-	wait (2.8);
+	wait1Msec (2.8);
 	motor [Lift2] = 0;
 	// this will make the lift up
 	motor [MobileR] = -127;
 	motor [MobileL] = -127;
-	wait (0.9);
+	wait1Msec (0.9);
 	motor [MobileR] = 0;
 	motor [MobileL] = 0;
 	// this will make the Mobile goal to go down, and robot is completely open (Transfomation over)
 	motor [Left] = 127;
 	motor [Right] = 127;
-	wait (4.0);
+	wait1Msec (4.0);
 	motor [Left] = 0;
 	motor [Right] = 0;
 	//this will make so that the robot moves foward towards the mobile goal
 	motor [MobileR] = 127;
 	motor [MobileL] = 127;
-	wait (1.0);
+	wait1Msec (1.0);
 	motor [MobileR] = 0;
 	motor [MobileL] = 0;
-	wait (0.5);
-	this will make the mobile goal to go up with one moble cone
+	wait1Msec (0.5);
+  //this will make the mobile goal to go up with one moble cone
 	motor [Left] = -127;
 	motor [Right] = -127;
-	wait (4.0);
+	wait1Msec (4.0);
 	motor [Left] = 0;
 	motor [Right] = 0;
-	this will make the robot to move back towards the goal
+  //this will make the robot to move back towards the goal
 	motor [Right] = 127;    // <- top + for blue, top - for red (keep opposite)
 	motor [Left] = -127;
-	wait (1.0);
+	wait1Msec (1.0);
 	motor [Right] = 0;
 	motor [Left] = 0;
-	this will make the robot to point turn 90 away from the wall
+	//this will make the robot to point turn 90 away from the wall
 	motor [MobileR] = -63.5;
 	motor [MobileL] = -63.5;
-	wait (1.0);
+	wait1Msec (1.0);
 	motor [MobileR] = 0;
 	motor [MobileL] = 0;
 	//
 	motor [Right] = -63.5;
 	motor [Left]  = -63.5;
-  wait (1.0);
+  wait1Msec (1.0);
   motor [Right] = 0;
   motor [Left]  = 0;
 
@@ -129,18 +129,46 @@ task usercontrol()
 	// User control code here, inside the loop( this is to map your bottons)
 	while (true)
 	{
-		int leftside=vexRT(Ch3);
-		int rightside=vexRT(Ch2);
+		//int leftside=vexRT(Ch3);
+		//int rightside=vexRT(Ch2);
 		int liftup=vexRT(Btn6U);
 		int liftdown=vexRT(Btn6D);
 		int clawopen=vexRT(Btn8R);
 		int clawclose=vexRT(Btn8D);
-		int liftup2=vexRT(Btn5U);
-		int liftdown2=vexRT(Btn5D);
 		int mobileup=vexRT(Btn7L);
 		int mobiledown=vexRT(Btn7D);
+		int leftY=vexRT(Ch3);
+		int leftX=vexRT(Ch2);
+		int deadzone = 10; //toleranec for joystick sticking and not returng to zero when released
+		int Lift2M=vexRT(Ch3);
+
+  if (abs(vexRT[Ch3]) > deadzone)
+	{
+		leftY = vexRT[Ch3];
+	}
+	else
+	{
+		leftY = 0;
+	}
+	//Get the values of the left (left/right). Prevent small values from moving robot when no stick
+	if (abs(vexRT[Ch4]) > deadzone)
+	{
+		leftX = vexRT[Ch4];
+	}
+	else
+	{
+		leftX = 0;
+	}
+
+	//ArcadeDrive - Left stick
+	motor[Left] = leftY + leftX;
+
+	motor[Right]= leftY - leftX;
+
+	wait1Msec(0.1); //sleep time to allow other tasks to run
+
 		//Drive train
-		if (leftside >=10)
+		/*if (leftside >=10)
 		{motor [Left] =leftside;
 		}
 		else if (leftside <=-10)
@@ -159,6 +187,9 @@ task usercontrol()
 			motor [Right] =rightside;
 		}
 		else
+		*/
+
+	 // arcade drive
 
 		{motor [Right] =0;}
 		// Lift
@@ -172,14 +203,15 @@ task usercontrol()
 		else {
 			motor [Lift1] = 0;
 		}// this is so the lift doesn't move if there's nothing
-		if (liftup2 == 1){
-			motor [Lift2] = 127;
-		}
-		else if (liftdown2 == 1){
-			motor [Lift2] = -127;
-		}
+		if (Lift2M >=15)
+		{motor [Lift2] = Lift2M;
+			}
+		else if (Lift2M >= -15)
+	  {motor [lift2] = Lift2M;
+	  	}
 		else
-			motor [Lift2]= 0;
+		{motor [Lift2]=0;
+			}
 		// Claw control
 		if (clawopen == 1)
 			motor [Claw] = 127; //opening the claw
