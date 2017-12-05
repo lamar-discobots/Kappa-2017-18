@@ -180,92 +180,132 @@ task autonomous()
 
 task usercontrol()
 {
-	// User control code here, inside the loop( this is to map your bottons)
-	while (true)
-	{
-		int leftside=vexRT(Ch3);
-		int rightside=vexRT(Ch2);
-		int liftup=vexRT(Btn6U);
-		int liftdown=vexRT(Btn6D);
-		int clawopen=vexRT(Btn8R);
-		int clawclose=vexRT(Btn8D);
-		int liftup2=vexRT(Btn5U);
-		int liftdown2=vexRT(Btn5D);
-		int mobileup=vexRT(Btn7L);
-		int mobiledown=vexRT(Btn7D);
-		//Drive train
-		if (leftside >=10)
-		{motor [Left] =leftside;
-		}
-		else if (leftside <=-10)
-		{motor [Left] = leftside;
-		}
-		else
-		{motor [Left] =0;
-		}
+  // User control code here, inside the loop( this is to map your bottons)
+  while (true)
+  {
+    //int leftside=vexRT(Ch3);
+    //int rightside=vexRT(Ch2);
+    int liftup=vexRT(Btn6U);
+    int liftdown=vexRT(Btn6D);
+    int clawopen=vexRT(Btn8R);
+    int clawclose=vexRT(Btn8D);
+    int mobileup=vexRT(Btn7L);
+    int mobiledown=vexRT(Btn7D);
+    int leftY=vexRT(Ch3);
+    int leftX=vexRT(Ch4);
+    int deadzone = 10; //toleranec for joystick sticking and not returng to zero when released
+    int Lift2M=vexRT(Ch2);
 
-		if (rightside >=10)
-		{
-			motor [Right] =rightside;
-		}
-		else if (rightside <=-10)
-		{
-			motor [Right] =rightside;
-		}
-		else
+  if (abs(vexRT[Ch3]) > deadzone)
+  {
+    leftY = vexRT[Ch3];
+  }
+else
+  {
+    leftY = 0;
+  }
+  //Get the values of the left (left/right). Prevent small values from moving robot when no stick
+  if (abs(vexRT[Ch4]) > deadzone)
+  {
+    leftX = vexRT[Ch4];
+  }
+  else
+  {
+    leftX = 0;
+  }
 
-		{motor [Right] =0;}
-		// Lift
+  //ArcadeDrive - Left stick
+  motor[Left] = leftY + leftX;
 
-		if (liftup == 1) {
-			motor [Lift1] = 127;
-		}// this is for the lift to go up
-		else if (liftdown == 1) {
-			motor [Lift1] = -127;
-		}//this is lift to go down
-		else {
-			motor [Lift1] = 0;
-		}// this is so the lift doesn't move if there's nothing
-		if (liftup2 == 1){
-			motor [Lift2] = 127;
-		}
-		else if (liftdown2 == 1){
-			motor [Lift2] = -127;
-		}
-		else
-			motor [Lift2]= 0;
-		// Claw control
-		if (clawopen == 1)
-			motor [Claw] = 127; //opening the claw
+  motor[Right]= leftY - leftX;
 
-		else if (clawclose == 1)
-			motor [Claw] = -127; // closing in the claw
-		else{
-			motor [Claw] = 0;
-		}// no claw movement
+  wait1Msec(0.1); //sleep time to allow other tasks to run
 
-		if(mobileup == 1){
-			motor [MobileR] = 127;
-			motor [MobileL] = 127;
-		}
-		else if (mobiledown == 1){
-			motor [MobileR] = -127;
-			motor [MobileL] = -127;
-		}
-		else{
-			motor [MobileR] = 0;
-			motor [MobileL] = 0;
-		}
+    //Drive train
+    /*if (leftside >=10)
+ {motor [Left] =leftside;
+    }
+    else if (leftside <=-10)
+    {motor [Left] =leftside;
+    }
+    else
+    {motor [Left] =0;
+    }
 
-		// This is the main execution loop for the user control program.
-		// Each time through the loop your program should update motor + servo
-		// values based on feedback from the joysticks.
+    if (rightside >=10)
+    {
+      motor [Right] =rightside;
+    }
+    else if (rightside <=-10)
+    {
+      motor [Right] =rightside;
+    }
+    else
+    */
 
-		// ........................................................................
-		// Insert user code here. This is where you use the joystick values to
-		// update your motors, etc.
-		// ........................................................................
+   // arcade drive
 
-		// Remove this function call once you have "real" code.
-	}
+    {motor [Right] =0;}
+    // Lift
+
+    if (liftup == 1) {
+      motor [Lift1] = 127;
+    }// this is for the lift to go up
+    else if (liftdown == 1) {
+      motor [Lift1] = -127;
+    }//this is lift to go down
+    else {
+      motor [Lift1] = 0;
+    }// this is so the lift doesn't move if there's nothing
+    if (Lift2M >=15)
+    {motor [Lift2] = Lift2M;
+      }
+    else if (Lift2M >= -15)
+    {motor [lift2] = Lift2M;
+      }
+    else
+    {motor [Lift2]=0;
+    if (Lift2M >=15)
+    {motor [Lift2] = Lift2M;
+      }
+    else if (Lift2M >= -15)
+    {motor [lift2] = Lift2M;
+      }
+    else
+    {motor [Lift2]=0;
+      }
+    // Claw control
+    if (clawopen == 1)
+      motor [Claw] = 127; //opening the claw
+
+    else if (clawclose == 1)
+      motor [Claw] = -127; // closing in the claw
+    else{
+      motor [Claw] = 0;
+    }// no claw movement
+
+    if(mobileup == 1){
+      motor [MobileR] = 127;
+      motor [MobileL] = 127;
+    }
+    else if (mobiledown == 1){
+      motor [MobileR] = -127;
+      motor [MobileL] = -127;
+    }
+    else{
+      motor [MobileR] = 0;
+      motor [MobileL] = 0;
+    }
+
+    // This is the main execution loop for the user control program.
+    // Each time through the loop your program should update motor + servo
+    // values based on feedback from the joysticks.
+
+    // ........................................................................
+    // Insert user code here. This is where you use the joystick values to
+    // update your motors, etc.
+    // ........................................................................
+
+    // Remove this function call once you have "real" code.
+  }
 }
