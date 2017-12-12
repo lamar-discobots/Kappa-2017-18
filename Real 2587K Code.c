@@ -66,21 +66,21 @@ task autonomous()
   wait (1.2);
   motor [Lift2] = 0;
 	// flip lift away from mobile goal
-  motor [MobileR] = 127;
-	motor [MobileL] = 127;
-	wait (1.0);
+  motor [MobileR] = -127;
+	motor [MobileL] = -127;
+	wait (0.8);
 	motor [MobileR] = 0;
 	motor [MobileL] = 0;
 	// lower mobile goal
   motor [Left] = 127;
   motor [Right] = 127;
-  wait (2.9);
+  wait (2.5);
   motor [Left] = 0;
   motor [Right] = 0;
   // move forwards towards  goal (mobile goal facing away home)
-	motor [MobileR] = -127;
-	motor [MobileL] = -127;
-	wait (1.0);
+	motor [MobileR] = 127;
+	motor [MobileL] = 127;
+	wait (0.8);
 	motor [MobileR] = 0;
 	motor [MobileL] = 0;
 	// raise mobile goal with goal in it
@@ -92,12 +92,18 @@ task autonomous()
   wait (0.5);
   motor [Claw] = 0;
   // open claw to let go of cone
-	motor [Left] = -127;
-	motor [Right] = -127;
-	wait (3.0);
+  motor [Left] = -127;
+	motor [Right] = 127;
+	wait (1.55);
 	motor [Left] = 0;
 	motor [Right] = 0;
-	// move back to home with cone on mobile goLift2
+  // rotate 180, mobile goal facing home
+	motor [Left] = 127;
+	motor [Right] = 127;
+	wait (2.6);
+	motor [Left] = 0;
+	motor [Right] = 0;
+	// move back to home with cone on mobile goal
 	motor [Claw] = -127;
 	wait (0.5);
 	motor [Claw] = 0;
@@ -105,12 +111,15 @@ task autonomous()
 	wait (1.5);
 	motor [Lift2] = 0;
 	// open claw and move arm away from mobile goal
-	motor [MobileR] = 127;
-	motor [MobileL] = 127;
+	motor [MobileR] = -127;
+	motor [MobileL] = -127;
+	wait (0.8);
+	motor [MobileR] = 0;
+	motor [MobileL] = 0;
 	// lift mobile goal down
-	motor [Left] = 127;
-	motor [Right] = 127;
-	wait (0.5);
+	motor [Left] = -127;
+	motor [Right] = -127;
+	wait (0.6);
 	motor [Left] = 0;
 	motor [Right] = 0;
 
@@ -193,28 +202,24 @@ task usercontrol()
     int mobiledown=vexRT(Btn7D);
     int leftY=vexRT(Ch3);
     int leftX=vexRT(Ch4);
-    int deadzone = 10; //toleranec for joystick sticking and not returng to zero when released
+    int deadzone = 10;     //tolerance for joystick sticking and not returng to zero when released
     int Lift2M=vexRT(Ch2);
 
-  if (abs(vexRT[Ch3]) > deadzone)
-  {
+  if (abs(vexRT[Ch3]) > deadzone){
     leftY = vexRT[Ch3];
   }
-else
-  {
+else{
     leftY = 0;
   }
-  //Get the values of the left (left/right). Prevent small values from moving robot when no stick
-  if (abs(vexRT[Ch4]) > deadzone)
-  {
+  // Get the values of the left (left/right). Prevent small values from moving robot when no stick
+  if (abs(vexRT[Ch4]) > deadzone){
     leftX = vexRT[Ch4];
   }
-  else
-  {
+  else{
     leftX = 0;
   }
 
-  //ArcadeDrive - Left stick
+  // ArcadeDrive - Left stick
   motor[Left] = leftY + leftX;
 
   motor[Right]= leftY - leftX;
@@ -241,11 +246,10 @@ else
       motor [Right] =rightside;
     }
     else
-    */
-
-   // arcade drive
 
     {motor [Right] =0;}
+    */
+
     // Lift
 
     if (liftup == 1) {
@@ -260,8 +264,8 @@ else
     if (Lift2M >=15)
     {motor [Lift2] = Lift2M;
       }
-    else if (Lift2M >= -15)
-    {motor [lift2] = Lift2M;
+    else if (Lift2M <= -15)
+    {motor [Lift2] = Lift2M;
       }
     else
     {motor [Lift2]=0;
@@ -269,7 +273,7 @@ else
     {motor [Lift2] = Lift2M;
       }
     else if (Lift2M >= -15)
-    {motor [lift2] = Lift2M;
+    {motor [Lift2] = Lift2M;
       }
     else
     {motor [Lift2]=0;
@@ -284,7 +288,7 @@ else
       motor [Claw] = 0;
     }// no claw movement
 
-    if(mobileup == 1){
+    if (mobileup == 1){
       motor [MobileR] = 127;
       motor [MobileL] = 127;
     }
@@ -308,4 +312,5 @@ else
 
     // Remove this function call once you have "real" code.
   }
+}
 }
