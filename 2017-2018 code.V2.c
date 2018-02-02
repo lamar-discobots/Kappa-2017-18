@@ -207,7 +207,7 @@ task usercontrol()
 		{motor [Lift2] = Lift2M;
 			}
 		else if (Lift2M >= -15)
-	  {motor [lift2] = Lift2M;
+	  {motor [Lift2] = Lift2M;
 	  	}
 		else
 		{motor [Lift2]=0;
