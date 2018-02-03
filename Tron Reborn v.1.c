@@ -100,23 +100,21 @@ task autonomous()
 	motor[LiftR]= 0;
 //The lift stops
 
-/*	motor[Claw]= 127;
+  motor[Claw]= 127;
 	wait(1.5);
-	motor[Lift1_L]= 127;
-	motor[Lift1_R]= 127;
+	motor[LiftL]= 127;
+	motor[LiftR]= 127;
 	wait(1.5);
 //The lift moves up 1.5 seconds
- 	motor[Lift1_L]= 0;
-	motor[Lift1_R]= 0;
+ 	motor[LiftL]= 0;
+	motor[LiftR]= 0;
 	motor[Claw]= 0;
 //The lift stops
 
-	motor[InstaL]= -127;
-	motor[InstaR]= -127;
+	motor[Mobile]= -127;
 	wait(0.5);
 //Mobile goal goes backward
-	motor[InstaL]=0;
-	motor[InstaR]=0;
+	motor[Mobile]=0;
 //Mobile goal stops
 
 	resetMotorEncoder(Left);
@@ -152,12 +150,10 @@ task autonomous()
 	motor[Right]= 0;
 // Robot goes forward for a little bit
 
-	motor[InstaL]= 127;
-	motor[InstaR]= 127;
+	motor[Mobile]= 127;
 	wait(0.5);
 //Mobile goal goes forward
-	motor[InstaL]= 0;
-	motor[InstaR]= 0;
+	motor[Mobile]= 0;
 //Mobile goal stops
 
 	resetMotorEncoder(Left);
@@ -181,7 +177,7 @@ task usercontrol()
   {
   	int Clawopen   = vexRT(Btn8R);
   	int Clawclose  = vexRT(Btn8D);
-  	int Mobileup   = vexRT(Btn7L);
+  	int MobileUp   = vexRT(Btn7L);
   	int MobileDown = vexRT(Btn7D);
   	int Lift2M     = vexRT(Ch2);
   	int Liftdown   = vexRT(Btn5D);
@@ -231,13 +227,13 @@ task usercontrol()
 //////// First Lift Movement///////////////////
 
 //////// Second Lift Movement//////////////////
-		if (lift2M >=15){
-			motor [Lift2L] = lift2M;
-			motor [Lift2R] = lift2M;
+		if (Lift2M >=15){
+			motor [Lift2L] = Lift2M;
+			motor [Lift2R] = Lift2M;
 		}
-		else if (lift2M <=-15){
-			motor  [Lift2L] = lift2M;
-			motor  [Lift2R] = lift2M;
+		else if (Lift2M <=-15){
+			motor  [Lift2L] = Lift2M;
+			motor  [Lift2R] = Lift2M;
 		}
 		else{
 			motor [Lift2L] = 0;
@@ -258,10 +254,10 @@ task usercontrol()
 //////// Claw Control/////////////////////////
 
 //////// Mobile Goal/////////////////////////
-		if(Mobileup == 1){
+		if(MobileUp == 1){
 			motor [Mobile] = 127;
 		}
-		else if (Mobiledown == 1){
+		else if (MobileDown == 1){
 			motor [Mobile] = -127;
 		}
 		else{
