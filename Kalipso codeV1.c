@@ -1,4 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    liftPot,        sensorPotentiometer)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           Claw,          tmotorVex393_HBridge, openLoop)
@@ -38,6 +39,12 @@
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+//conversion of degrees for potentiometers
+void potent(int deg)
+{
+	deg = deg*265/4095;
+}
+
 void pre_auton()
 {
   bStopTasksBetweenModes = true;
@@ -45,6 +52,38 @@ void pre_auton()
 
 task autonomous()
 {
+motor[LiftR] = 127;
+motor[LIFTR] = 127;
+motor[LiftL] = 127;
+motor[LIFTL] = 127;
+motor[Right] = 64.5;
+motor[Left]  = 64.5;
+wait (1.0);
+motor[LiftR] = 0;
+motor[LIFTR] = 0;
+motor[LiftL] = 0;
+motor[LIFTL] = 0;
+motor[Mobile]= 127;
+wait (1.5);
+motor[Mobile]= 0;
+motor[Right] = 0;
+motor[Left]  = 0;
+wait (1.0);
+motor[Mobile] = -127;
+wait(1.0);
+motor[LiftR] = -127;
+motor[LIFTR] = -127;
+motor[LiftL] = -127;
+motor[LIFTL] = -127;
+wait(1.0);
+motor[Right] = -127;
+motor[Left]  = -127;
+wait(1.0);
+motor[Right] = 0;
+motor[Left ] = 0;
+
+
+
 
 }
 
