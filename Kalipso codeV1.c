@@ -101,21 +101,24 @@ task usercontrol()
   	int leftstickX;
   	int leftstickY;
   	int deadzone   = 5;
+  	int vertical   = vexRT(Btn6U);
 
-  	while (SensorValue[port1] < 320)
+
+  /*	while (SensorValue[port1] < 600)
   	{
-  		motor [Lift2R] = 20;
-  		motor [Lift2L] = 20;
+  		motor [Lift2R] = -1414;
+  		motor [Lift2L] = -1414;
   	}
   		motor [Lift2R] = 0;
   		motor [Lift2L] = 0;
 
-  	while (SensorValue[port1] > 380)
-  	{ motor [Lift2R] = -20;
-  		motor [Lift2L] = -20;
+  	while (SensorValue[port1] < 2270)
+  	{ motor [Lift2R] = -256;
+  		motor [Lift2L] = -256;
   	}
   		motor [Lift2R] = 0;
   		motor [Lift2L] = 0;
+  	*/
 /////////// Arcade Drive////////////////////////
   	if(abs(vexRT[Ch3]) >deadzone){
 			leftstickY = vexRT[Ch3];
@@ -176,7 +179,13 @@ task usercontrol()
 			motor [Claw] = 0;
 		}
 //////// Claw Control/////////////////////////
-
+		if (vertical ==1){
+			motor [Lift2R] =64.5;
+			motor [Lift2L] =64.5;
+			wait (0.5);
+			motor [Lift2R] =0;
+			motor [Lift2L] =0;
+}
 //////// Mobile Goal/////////////////////////
 		if(MobileUp == 1){
 			motor [Mobile] = 127;
