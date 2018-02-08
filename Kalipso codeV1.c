@@ -40,11 +40,11 @@
 /*---------------------------------------------------------------------------*/
 
 //conversion of degrees for potentiometers
-void potent(int deg)
+/*void potent(int deg)
 {
 	deg = deg*265/4095;
 }
-
+*/
 void pre_auton()
 {
   bStopTasksBetweenModes = true;
@@ -102,6 +102,20 @@ task usercontrol()
   	int leftstickY;
   	int deadzone   = 5;
 
+  	while (SensorValue[port1] < 320)
+  	{
+  		motor [Lift2R] = 20;
+  		motor [Lift2L] = 20;
+  	}
+  		motor [Lift2R] = 0;
+  		motor [Lift2L] = 0;
+
+  	while (SensorValue[port1] > 380)
+  	{ motor [Lift2R] = -20;
+  		motor [Lift2L] = -20;
+  	}
+  		motor [Lift2R] = 0;
+  		motor [Lift2L] = 0;
 /////////// Arcade Drive////////////////////////
   	if(abs(vexRT[Ch3]) >deadzone){
 			leftstickY = vexRT[Ch3];
