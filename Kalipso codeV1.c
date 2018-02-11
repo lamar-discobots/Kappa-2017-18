@@ -93,46 +93,29 @@ task usercontrol()
   {
   	int Clawopen   = vexRT(Btn8R);
   	int Clawclose  = vexRT(Btn8D);
-  	int MobileUp   = vexRT(Btn7L);
-  	int MobileDown = vexRT(Btn7D);
-  	int Lift2M     = vexRT(Ch2);
+  	int MobileUp   = vexRT(Btn7D);
+  	int MobileDown = vexRT(Btn7L);
+  	int Lift2Up    = vexRT(Btn6U);
+  	int Lift2Down  = vexRT(Btn6D);
   	int Liftdown   = vexRT(Btn5D);
   	int Liftup     = vexRT(Btn5U);
   	int leftstickX;
   	int leftstickY;
   	int deadzone   = 5;
-  	int vertical   = vexRT(Btn6U);
 
-
-  /*	while (SensorValue[port1] < 600)
-  	{
-  		motor [Lift2R] = -1414;
-  		motor [Lift2L] = -1414;
-  	}
-  		motor [Lift2R] = 0;
-  		motor [Lift2L] = 0;
-
-  	while (SensorValue[port1] < 2270)
-  	{ motor [Lift2R] = -256;
-  		motor [Lift2L] = -256;
-  	}
-  		motor [Lift2R] = 0;
-  		motor [Lift2L] = 0;
-  	*/
 /////////// Arcade Drive////////////////////////
   	if(abs(vexRT[Ch3]) >deadzone){
-			leftstickY = vexRT[Ch3];
-		}
+			leftstickY = vexRT[Ch3];}
 		else{
 			leftstickY = 0;
-		}
+}
 
 		if(abs(vexRT[Ch4]) > deadzone){
 			leftstickX = vexRT[Ch4];
-		}
+}
 		else{
 			leftstickX =0 ;
-		}
+}
 
 		motor[Left] = leftstickY + leftstickX;
 		motor[Right]= leftstickY - leftstickX;
@@ -142,61 +125,60 @@ task usercontrol()
 		if (Liftup == 1){
 			motor [LiftR] = 127;
 			motor [LiftL] = 127;
-			}
-		else if (Liftdown  == 1) {
+			motor [LIFTR] = 127;
+			motor [LIFTL] = 127;
+}
+		else if (Liftdown  == 1){
 			motor [LiftR] = -127;
 			motor [LiftL] = -127;
-			}
+			motor [LIFTR] = -127;
+			motor [LIFTL] = -127;
+}
 			else {
-				motor[LiftR] = 0;
-				motor[LiftL] = 0;
-			}
+				motor[LiftR] = 10;
+				motor[LiftL] = -10;
+			  motor [LIFTR] = -10;
+			  motor [LIFTL] = 10;
+}
 //////// First Lift Movement///////////////////
 
-//////// Second Lift Movement//////////////////
-		if (Lift2M >=15){
-			motor [Lift2L] = Lift2M;
-			motor [Lift2R] = Lift2M;
-		}
-		else if (Lift2M <=-15){
-			motor  [Lift2L] = Lift2M;
-			motor  [Lift2R] = Lift2M;
-		}
-		else{
-			motor [Lift2L] = 0;
-			motor [Lift2R] = 0;
-		}
-//////// Second Lift Movement//////////////////
-
 //////// Claw Control/////////////////////////
-		if (Clawopen == 1)
+		if (Clawopen == 1){
 			motor [Claw] = 127;
-
-		else if (Clawclose == 1)
+}
+		else if (Clawclose == 1){
 			motor [Claw] = -127;
-
+}
 		else{
 			motor [Claw] = 0;
-		}
+}
 //////// Claw Control/////////////////////////
-		if (vertical ==1){
+
+//////// Second lift//////////////////////////
+		if (liftup ==1){
 			motor [Lift2R] =64.5;
 			motor [Lift2L] =64.5;
-			wait (0.5);
-			motor [Lift2R] =0;
-			motor [Lift2L] =0;
 }
+		else if (Liftdown ==1){
+			motor [Lift2R] = -64.5;
+			motor [Lift2L] = -64.5;
+}
+		else{
+			motor [Lift2R] =15;
+			motor [Lift2L] =15;
+}
+//////// Second lift/////////////////////////
+
 //////// Mobile Goal/////////////////////////
 		if(MobileUp == 1){
 			motor [Mobile] = 127;
-		}
+}
 		else if (MobileDown == 1){
 			motor [Mobile] = -127;
-		}
+}
 		else{
 			motor [Mobile] = 0;
-			motor [Mobile] = 0;
 //////// Mobile Goal/////////////////////////
-		}
-  }
+	}
+ }
 }
