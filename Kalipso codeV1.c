@@ -99,6 +99,7 @@ task usercontrol()
   	int Lift2Down  = vexRT(Btn6D);
   	int Liftdown   = vexRT(Btn5D);
   	int Liftup     = vexRT(Btn5U);
+  	int Lift2M     = vexRT(Ch2);
   	int leftstickX;
   	int leftstickY;
   	int deadzone   = 5;
@@ -142,6 +143,20 @@ task usercontrol()
 }
 //////// First Lift Movement///////////////////
 
+//////// Second lift with ch2//////////////////
+
+if (Lift2M >=15){
+	motor [Lift2L] = Lift2M;
+	motor [Lift2R] = Lift2M;
+}
+	else if (Lift2M <=-15){
+	motor [Lift2L] = Lift2M;
+	motor [Lift2R] = Lift2M;
+}
+	else{
+	motor [Lift2L] = 10;
+	motor [Lift2R] = 10;
+}
 //////// Claw Control/////////////////////////
 		if (Clawopen == 1){
 			motor [Claw] = 127;
@@ -155,17 +170,17 @@ task usercontrol()
 //////// Claw Control/////////////////////////
 
 //////// Second lift//////////////////////////
-		if (liftup ==1){
+		if (Lift2Up ==1){
 			motor [Lift2R] =64.5;
 			motor [Lift2L] =64.5;
 }
-		else if (Liftdown ==1){
+		else if (Lift2Down ==1){
 			motor [Lift2R] = -64.5;
 			motor [Lift2L] = -64.5;
 }
 		else{
-			motor [Lift2R] =15;
-			motor [Lift2L] =15;
+			motor [Lift2R] =0;
+			motor [Lift2L] =0;
 }
 //////// Second lift/////////////////////////
 
