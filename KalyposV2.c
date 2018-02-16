@@ -57,12 +57,61 @@ void pre_auton()
 
 task autonomous()
 {
-  // ..........................................................................
-  // Insert user code here.
-  // ..........................................................................
-
-  // Remove this function call once you have "real" code.
-  AutonomousCodePlaceholderForTesting();
+motor[Lift2R]= -127;
+motor[Lift2L]= -127;
+motor[LiftR] = 127;
+motor[LIFTR] = 127;
+motor[LiftL] = 127;
+motor[LIFTL] = 127;
+motor[Right] = 64.5;
+motor[Left]  = 64.5;
+wait (1.0);
+motor[Lift2R]= 25;
+motor[Lift2L]= 25;
+motor[LiftR] = 0;
+motor[LIFTR] = 0;
+motor[LiftL] = 0;
+motor[LIFTL] = 0;
+motor[Mobile]= 127;
+wait (1.5);
+motor[Mobile]= 0;
+motor[Right] = 0;
+motor[Left]  = 0;
+wait (1.0);
+motor[Mobile] = -127;
+wait(1.0);
+motor[LiftR] = -127;
+motor[LIFTR] = -127;
+motor[LiftL] = -127;
+motor[LIFTL] = -127;
+wait(1.0);
+motor[Right] = -127;
+motor[Left]  = -127;
+motor[Mobile]= 0;
+wait(1.0);
+motor[Lift2R]= 127;
+motor[Lift2L]= 127;
+motor[Right] = 64.5;
+motor[Left]  = -64.5;
+motor[LiftR] = 127;
+motor[LIFTR] = 127;
+motor[LiftL] = 127;
+motor[LIFTL] = 127;
+wait(2.0);
+motor[Right] = 127;
+motor[Left ] = 127;
+wait(1.0);
+motor[Mobile]= 127;
+motor[Right] = 127;
+motor[Left]  = 127;
+wait(1.5);
+motor[LiftR] = 0;
+motor[LIFTR] = 0;
+motor[LiftL] = 0;
+motor[LIFTL] = 0;
+motor[Right] = -127;
+motor[Left] =  -127;
+motor[Mobile] = -127;
 }
 
 task usercontrol()
