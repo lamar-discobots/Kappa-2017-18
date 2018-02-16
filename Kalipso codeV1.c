@@ -1,4 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, in1,    liftPot,        sensorPotentiometer)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           Claw,          tmotorVex393_HBridge, openLoop)
@@ -38,6 +39,12 @@
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+//conversion of degrees for potentiometers
+/*void potent(int deg)
+{
+	deg = deg*265/4095;
+}
+*/
 void pre_auton()
 {
   bStopTasksBetweenModes = true;
@@ -46,37 +53,66 @@ void pre_auton()
 task autonomous()
 {
 
+motor [Lift2R] = -127;
+motor [Lift2L] = -127;
+wait (1.0);
+motor [Lift2R] =0;
+motor [Lift2L] =0;
+/*
+motor[LiftR] = 127;
+motor[LIFTR] = 127;
+motor[LiftL] = 127;
+motor[LIFTL] = 127;
+motor[Right] = 64.5;
+motor[Left]  = 64.5;
+wait (1.0);
+motor[LiftR] = 0;
+motor[LIFTR] = 0;
+motor[LiftL] = 0;
+motor[LIFTL] = 0;
+motor[Mobile]= 127;
+wait (1.5);
+motor[Mobile]= 0;
+motor[Right] = 0;
+motor[Left]  = 0;
+wait (1.0);
+motor[Mobile] = -127;
+wait(1.0);
+motor[LiftR] = -127;
+motor[LIFTR] = -127;
+motor[LiftL] = -127;
+motor[LIFTL] = -127;
+wait(1.0);
+motor[Right] = -127;
+motor[Left]  = -127;
+wait(1.0);
+motor[Right] = 0;
+motor[Left ] = 0;
+*/
+
+
+
 }
 
 task usercontrol()
 {
   while (true)
   {
-  	int Clawopen   = vexRT(Btn8R);
-  	int Clawclose  = vexRT(Btn8D);
-  	int MobileUp   = vexRT(Btn7L);
-  	int MobileDown = vexRT(Btn7D);
-  	int Lift2M     = vexRT(Ch2);
-  	int Liftdown   = vexRT(Btn5D);
-  	int Liftup     = vexRT(Btn5U);
-  	int leftstickX;
-  	int leftstickY;
-  	int deadzone   = 5;
+
 
 /////////// Arcade Drive////////////////////////
   	if(abs(vexRT[Ch3]) >deadzone){
-			leftstickY = vexRT[Ch3];
-		}
+			leftstickY = vexRT[Ch3];}
 		else{
 			leftstickY = 0;
-		}
+}
 
 		if(abs(vexRT[Ch4]) > deadzone){
 			leftstickX = vexRT[Ch4];
-		}
+}
 		else{
 			leftstickX =0 ;
-		}
+}
 
 		motor[Left] = leftstickY + leftstickX;
 		motor[Right]= leftstickY - leftstickX;
@@ -86,55 +122,74 @@ task usercontrol()
 		if (Liftup == 1){
 			motor [LiftR] = 127;
 			motor [LiftL] = 127;
-			}
-		else if (Liftdown  == 1) {
+			motor [LIFTR] = 127;
+			motor [LIFTL] = 127;
+}
+		else if (Liftdown  == 1){
 			motor [LiftR] = -127;
 			motor [LiftL] = -127;
-			}
+			motor [LIFTR] = -127;
+			motor [LIFTL] = -127;
+}
 			else {
-				motor[LiftR] = 0;
-				motor[LiftL] = 0;
-			}
+				motor[LiftR] = 10;
+				motor[LiftL] = -10;
+			  motor [LIFTR] = -10;
+			  motor [LIFTL] = 10;
+}
 //////// First Lift Movement///////////////////
 
-//////// Second Lift Movement//////////////////
-		if (Lift2M >=15){
-			motor [Lift2L] = Lift2M;
-			motor [Lift2R] = Lift2M;
-		}
-		else if (Lift2M <=-15){
-			motor  [Lift2L] = Lift2M;
-			motor  [Lift2R] = Lift2M;
-		}
-		else{
-			motor [Lift2L] = 0;
-			motor [Lift2R] = 0;
-		}
-//////// Second Lift Movement//////////////////
+//////// Second lift with ch2//////////////////
+  	 if (Lift2M >=15){
+      motor [Lift2L] = Lift2M;
+      motor [Lift2R] = Lift2M;
+}
+    	else if (Lift2M <=-15){
+      motor  [Lift2L] = Lift2M;
+      motor  [Lift2R] = Lift2M;
+}
+    	else{
+      motor [Lift2L] = 0;
+      motor [Lift2R] = 0;
+}
 
 //////// Claw Control/////////////////////////
-		if (Clawopen == 1)
+		if (Clawopen == 1){
 			motor [Claw] = 127;
-
-		else if (Clawclose == 1)
+}
+		else if (Clawclose == 1){
 			motor [Claw] = -127;
-
+}
 		else{
 			motor [Claw] = 0;
-		}
+}
 //////// Claw Control/////////////////////////
+
+//////// Second lift//////////////////////////
+		if (Liftverticalup ==1){
+			motor [Lift2R] =127;
+			motor [Lift2L] =127;
+}
+		else if (Liftverticaldown ==1){
+			motor [Lift2R] = -127;
+			motor [Lift2L] = -127;
+}
+		else{
+			motor [Lift2R] =0;
+			motor [Lift2L] =0;
+}
+//////// Second lift/////////////////////////
 
 //////// Mobile Goal/////////////////////////
 		if(MobileUp == 1){
 			motor [Mobile] = 127;
-		}
+}
 		else if (MobileDown == 1){
 			motor [Mobile] = -127;
-		}
+}
 		else{
 			motor [Mobile] = 0;
-			motor [Mobile] = 0;
 //////// Mobile Goal/////////////////////////
-		}
-  }
+	}
+ }
 }
