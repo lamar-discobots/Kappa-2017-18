@@ -55,11 +55,12 @@ void pre_auton()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-task autonomous()
-{
-/////////// Auton 1 /////////////////// (Start against right wall)
+task autonomous(){
 
-/*motor[Lift2R]= -127;
+/////////////// Auton 1 (Start against right wall) ///////////////
+
+/*
+motor[Lift2R]= -127;
 motor[Lift2L]= -127;
 motor[LiftR] = 127;
 motor[LIFTR] = 127;
@@ -93,10 +94,8 @@ motor[Mobile]= 0;
 wait(1.0);
 motor[Lift2R]= 127;
 motor[Lift2L]= 127;
-/////////////////
-motor[Right] = 64.5;
-motor[Left]  = -64.5;
-//////////////////////
+motor[Right] = 64.5;    // Change to switch arena sides
+motor[Left]  = -64.5;   // Change to switch arena sides
 motor[LiftR] = 127;
 motor[LIFTR] = 127;
 motor[LiftL] = 127;
@@ -117,9 +116,73 @@ motor[Right] = -127;
 motor[Left] =  -127;
 motor[Mobile] = -127;
 */
-////////////////Auton 1///////////////////
 
-////////////////Auton 2///////////////////
+/////////////// Auton 1 (Against right wall) ///////////////
+
+/////////////// Auton 2 (Start against left wall) ///////////////
+
+/*
+motor[Lift2R]= -127;
+motor[Lift2L]= -127;
+motor[LiftR] = 127;
+motor[LIFTR] = 127;
+motor[LiftL] = 127;
+motor[LIFTL] = 127;
+motor[Right] = 64.5;
+motor[Left]  = 64.5;
+wait (1.0);
+motor[Lift2R]= 25;
+motor[Lift2L]= 25;
+motor[LiftR] = 0;
+motor[LIFTR] = 0;
+motor[LiftL] = 0;
+motor[LIFTL] = 0;
+motor[Mobile]= 127;
+wait (1.5);
+motor[Mobile]= 0;
+motor[Right] = 0;
+motor[Left]  = 0;
+wait (1.0);
+motor[Mobile] = -127;
+wait(1.0);
+motor[LiftR] = -127;
+motor[LIFTR] = -127;
+motor[LiftL] = -127;
+motor[LIFTL] = -127;
+wait(1.0);
+motor[Right] = -127;
+motor[Left]  = -127;
+motor[Mobile]= 0;
+wait(1.0);
+motor[Lift2R]= 127;
+motor[Lift2L]= 127;
+motor[Right] = -64.5;
+motor[Left]  = 64.5;
+motor[LiftR] = 127;
+motor[LIFTR] = 127;
+motor[LiftL] = 127;
+motor[LIFTL] = 127;
+wait(2.0);
+motor[Right] = 127;
+motor[Left ] = 127;
+wait(1.0);
+motor[Mobile]= 127;
+motor[Right] = 127;
+motor[Left]  = 127;
+wait(1.5);
+motor[LiftR] = 0;
+motor[LIFTR] = 0;
+motor[LiftL] = 0;
+motor[LIFTL] = 0;
+motor[Right] = -127;
+motor[Left] =  -127;
+motor[Mobile] = -127;
+*/
+
+/////////////// Auton 2 (Against left wall) ///////////////
+
+/////////////// Auton 3 (High Stack) ///////////////  (Start against which side??)
+
 motor [Lift2R] =  127;
 motor [Lift2L] =  127;
 motor [LiftR]  =  127;
@@ -138,16 +201,15 @@ wait  (1.0);
 
 
 
-
-
+/////////////// Auton 3 (High Stack) ///////////////
 
 }
 
+/////////////// User Control ///////////////
+
 task usercontrol()
 {
-  // User control code here, inside the loop
-
-  while (true){
+   while (true){
 
   	int Clawopen    			= vexRT(Btn8R);
   	int Clawclose  				= vexRT(Btn8D);
@@ -156,7 +218,7 @@ task usercontrol()
   	int Liftdown   				= vexRT(Btn5D);
   	int Liftup    				= vexRT(Btn5U);
   	int Lift2M     				= vexRT(Ch2);
-  	int vertical          = vexRT(Btn6U);
+ // int vertical          = vexRT(Btn6U);
   	int leftstickX;
   	int leftstickY;
   	int deadzone   				= 5;
